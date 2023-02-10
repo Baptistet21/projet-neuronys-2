@@ -1,5 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
+
 export const getUsers = /* GraphQL */ `
  query MyQuery {
   listUsers(filter: {email: {eq: "user4@toto.com"}}) {
@@ -9,6 +10,16 @@ export const getUsers = /* GraphQL */ `
       orga_id
       orga_rank
       pseudo
+    }
+  }
+}
+`;
+
+export const getIdUser = /* GraphQL */ `
+ query MyQuery {
+  listUsers(filter: {email: {eq: "user4@toto.com"}}) {
+    items {
+      id
     }
   }
 }
@@ -27,6 +38,20 @@ query MyQuery {
 }
 
 `;
+export const getOrgaByName = /* GraphQL */ `
+query MyQuery {
+    listOrganisations(filter: {name: {eq: "User3"}}) {
+        items {
+            credits
+            id
+            name
+            orga_type
+            users_id
+        }
+    }
+}
+`;
+
 export const getOrganisation = /* GraphQL */ `
   query GetOrganisation($id: ID!) {
     getOrganisation(id: $id) {

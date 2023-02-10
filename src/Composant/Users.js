@@ -6,7 +6,6 @@ import {API} from "aws-amplify";
 
 
 
-
 function Users({name}) {
     const [users, setUsers] = useState([]);
 
@@ -17,7 +16,8 @@ function Users({name}) {
             console.log(response)
             const userList = response.data.listUsers.items
             console.log('user list',userList)
-            setUsers(userList) })();
+            setUsers(userList)
+        })();
     }, []);
 
     return (
@@ -28,7 +28,7 @@ function Users({name}) {
                         <div key={item.id}>
                             <h4>email : {item.email}</h4>
                             <p>pseudo : {item.pseudo}</p>
-                            <p>id : {item.id}</p>
+                            <p>users_id : {item.id}</p>
                             <p>orga_id : {item.orga_id}</p>
                             <p>orga_rank : {item.orga_rank}</p>
 
