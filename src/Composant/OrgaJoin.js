@@ -14,9 +14,8 @@ function OrgaJoin() {
     useEffect(() => {
         (async () => {
             const response = await API.graphql(graphqlOperation(getOrgaByName));
-            console.log('Orga Join :',response)
             const orgaList = response.data.listOrganisations.items
-            console.log('orga list join',orgaList)
+            console.log('orga join',orgaList)
             setOrgaJoin(orgaList)
 
 
@@ -29,10 +28,9 @@ function OrgaJoin() {
                     orgaJoin.map(item => (
                         <div key={item.id}>
                             <h4>name : {item.name}</h4>
-                            <p>orga_id : {item.id}</p>
                             <p>credits : {item.credits}</p>
                             <p>orga_type : {item.orga_type}</p>
-                            <p>users_id : {item.users_id}</p>
+                            <p>stripe_id : {item.stripe_id}</p>
 
 
 

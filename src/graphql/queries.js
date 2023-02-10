@@ -16,8 +16,8 @@ export const getUsers = /* GraphQL */ `
 `;
 
 export const getIdUser = /* GraphQL */ `
- query MyQuery {
-  listUsers(filter: {email: {eq: "user4@toto.com"}}) {
+ query MyQuery ($email: String){
+  listUsers(filter: {email: {eq: $email}}) {
     items {
       id
     }
@@ -47,11 +47,39 @@ query MyQuery {
             name
             orga_type
             users_id
+            stripe_id
+
         }
     }
 }
 `;
 
+export const getUserOrga = /* GraphQL */ `
+query MyQuery {
+    getUser(id: "4") {
+        email
+        id
+        orga {
+            name
+            credits
+            orga_type
+            stripe_id
+
+        }
+        orga_rank
+        pseudo
+    }
+}
+`;
+export const getIdByName = /* GraphQL */ `
+query MyQuery {
+    byEmail(email: "user4@toto.com") {
+        items {
+            id
+        }
+    }
+}
+`;
 export const getOrganisation = /* GraphQL */ `
   query GetOrganisation($id: ID!) {
     getOrganisation(id: $id) {

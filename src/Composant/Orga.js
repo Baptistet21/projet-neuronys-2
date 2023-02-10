@@ -6,7 +6,7 @@ import {API} from "aws-amplify";
 
 
 
-function Orga() {
+function Orga({id}) {
     const [orga, setOrga] = useState([]);
 
 

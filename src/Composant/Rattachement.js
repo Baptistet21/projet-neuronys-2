@@ -38,16 +38,7 @@ const Reclamation = () => {
         <form>
         </form>
         <br/>
-        <h2>User : </h2>
-        <ul>
-        {name}
-        <Users/>
-        </ul>
-        <br/>
-        <h2>User Organisation  : </h2>
-        <ul>
-            <Orga/>
-        </ul>
+       <Users/>
         <br/>
         <h2>Organisation Join : </h2>
         <ul>

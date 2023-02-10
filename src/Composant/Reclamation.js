@@ -4,7 +4,7 @@ import "./Nav.css"
 import Users from "./Users";
 import Orga from "./Orga";
 import { API, graphqlOperation } from 'aws-amplify';
-import {getIdUser, getUsers} from "../graphql/queries";
+import {getIdByName, getIdUser, getUsers} from "../graphql/queries";
 
 /*
 const updateOrga = `mutation UpdateOrga($input: UpdateOrgaInput!) {
@@ -32,13 +32,17 @@ const Reclamation = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await API.graphql(graphqlOperation(getIdUser));
+
+            const response = await API.graphql(graphqlOperation(getIdByName));
             console.log(response)
-            const idList = response.data.listUsers.items
+            const idList = response.data.byEmail.items.map(item => item.id);
             console.log('id list',idList)
-            setId(idList)
+            setId(idList[0])
         })();
     }, []);
+    console.log('name :',name)
+
+    console.log('id :',id)
 
 
 
@@ -50,19 +54,7 @@ const Reclamation = () => {
             <Button type={"submit"}>OK</Button>
         </form>
         <br/>
-        <h2>User : </h2>
-        <ul>
-                {name}
-                <Users name={name}/>
-
-        </ul>
-
-
-        <br/>
-        <h2>Organisation : </h2>
-        <ul>
-        <Orga/>
-        </ul>
+        <Users/>
         <br/>
         <input type="number" placeholder="Credits"  onChange={event => setCredit(parseInt(event.target.value))}/>
         {credit}
