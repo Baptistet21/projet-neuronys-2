@@ -38,6 +38,26 @@ query MyQuery {
 }
 
 `;
+/* mutation ajout credit*/
+
+export const updateCredits = `mutation MyMutation {
+  updateOrganisationCredits(input: {id: "4", credits: 18}) {
+    id
+    name
+    credits
+  }
+}
+`;
+export const updateUser_Orga =`
+mutation MyMutation {
+    updateUserOrga(input: {id: "3", orga_id: "4"}) {
+        id
+        email
+        orga_id
+    }
+}`;
+
+/* recup orga*/
 export const getOrgaByName = /* GraphQL */ `
 query MyQuery {
     listOrganisations(filter: {name: {eq: "User3"}}) {
@@ -71,11 +91,16 @@ query MyQuery {
     }
 }
 `;
+
+/* recup id user*/
 export const getIdByName = /* GraphQL */ `
-query MyQuery {
-    byEmail(email: "user4@toto.com") {
+query MyQuery ($email : String = "user4@toto.com") {
+    byEmail(email: $email) {
         items {
             id
+        orga {
+            credits
+            }
         }
     }
 }

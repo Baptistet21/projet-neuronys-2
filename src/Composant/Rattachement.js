@@ -27,9 +27,9 @@ const Reclamation = () => {
     return<div className={"Rattachement"}>
         <h1 style={{color:"#666"}}>Rattachement</h1>
         <form>
-            <input type="text" placeholder="User Email" onChange={event => setName(event.target.value)}/>
+            <input type="text" placeholder="User Email" onChange={event => setName(event.target.value)} required/>
             <>          </>
-            <input type="text" placeholder="Organisation name" onChange={event => setOrganisation(event.target.value)}/>
+            <input type="text" placeholder="Organisation name" onChange={event => setOrganisation(event.target.value)} required/>
             <br/>
             <Button>OK</Button>
 

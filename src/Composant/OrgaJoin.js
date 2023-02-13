@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import {getOrgaByName, getUsers} from "../graphql/queries";
+import {getOrgaByName} from "../graphql/queries";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
 
@@ -27,7 +27,7 @@ function OrgaJoin() {
                 {
                     orgaJoin.map(item => (
                         <div key={item.id}>
-                            <h4>name : {item.name}</h4>
+                            <h4>Organisation name : {item.name}</h4>
                             <p>credits : {item.credits}</p>
                             <p>orga_type : {item.orga_type}</p>
                             <p>stripe_id : {item.stripe_id}</p>

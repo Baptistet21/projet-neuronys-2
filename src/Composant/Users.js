@@ -1,13 +1,12 @@
 import React,{useEffect, useState} from "react";
-import {getUserOrga, getUsers} from "../graphql/queries";
+import {getUserOrga} from "../graphql/queries";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
-import Orga from "./Orga";
 
 
 
 
-function Users({name}) {
+function Users({id}) {
     const [users, setUsers] = useState([]);
     const [orga, setOrga] = useState([]);
 

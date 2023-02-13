@@ -9,7 +9,6 @@ import {withAuthenticator} from "@aws-amplify/ui-react";
 import {Routes,Route} from "react-router-dom";
 import Reclamation from "./Composant/Reclamation";
 import Rattachement from "./Composant/Rattachement";
-import Users from "./Composant/Users";
 
 
 Amplify.configure(config);

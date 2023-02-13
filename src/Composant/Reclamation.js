@@ -1,66 +1,84 @@
-import React, {useEffect, useState} from "react";
-import {Button, Card, CardContent, css, Typography} from "@mui/material";
+import React, {useState} from "react";
+import {Button} from "@mui/material";
 import "./Nav.css"
 import Users from "./Users";
-import Orga from "./Orga";
 import { API, graphqlOperation } from 'aws-amplify';
-import {getIdByName, getIdUser, getUsers} from "../graphql/queries";
+import {getIdByName, updateCredits} from "../graphql/queries";
 
-/*
-const updateOrga = `mutation UpdateOrga($input: UpdateOrgaInput!) {
-  updateOrga(input: $input) {
-    id
-    name
-    credits
-    orga_type
-    users_id
-  }
-}`;
 
-async function updateOrgaCredits(id, credits) {
-    const currentOrga = id.credits
-    const newCredits = currentOrga + credits;
-    const input = { id, credits: newCredits };
-    const response = await API.graphql(graphqlOperation(updateOrga, { input }));
-    console.log(response);
-}*/
+
 const Reclamation = () => {
-    const [name, setName] = useState("");
+    let [name, setName] = useState("");
+    const [creditUpdate, setCreditUpdate] = useState(0);
     const [credit, setCredit] = useState(0);
-    const [id, setId] = useState([]);
+    let [id, setId] = useState([]);
+    let NameConfirmation = useState("")
 
+    async function updateOrgaCredits() {
+        const response = await API.graphql(graphqlOperation(updateCredits))
+        console.log("mutation",response);
+    }
 
-    useEffect(() => {
-        (async () => {
+    /* recup id user*/
+    async function getId({email}) {
 
-            const response = await API.graphql(graphqlOperation(getIdByName));
+            const response = await API.graphql(graphqlOperation(getIdByName,{email}));
             console.log(response)
             const idList = response.data.byEmail.items.map(item => item.id);
-            console.log('id list',idList)
             setId(idList[0])
-        })();
-    }, []);
-    console.log('name :',name)
+            console.log('id user :',id)
+            return id
+    }
 
-    console.log('id :',id)
+    /* recup credit user*/
+    async function getCredit({email}) {
+
+        const response = await API.graphql(graphqlOperation(getIdByName,{email}));
+        console.log(response)
+        const creditList = response.data.byEmail.items.map(item => item.orga.credits)
+        setCredit(creditList[0])
+        console.log('credit :',credit)
+        return credit
+    }
 
 
 
+    const handleSubmit = event => {
+        event.preventDefault();
+        NameConfirmation = name
+        console.log(`Name: ${name}`, typeof NameConfirmation);
+        console.log('getId :',getId({NameConfirmation}))
+        console.log('name :',typeof name, name)
+        console.log('getCredit :',getCredit({NameConfirmation}))
+
+
+
+    };
+
+    const handleChange = event => {
+        setName(event.target.value);
+
+    };
 
     return <div className={"Reclamation"}>
+        <h3>id :{id}</h3>
         <h1 style={{color:"#666"}}>Reclamation</h1>
-        <form>
-            <input type="text" placeholder="User Email" value={name} onChange={event => setName(event.target.value)}/>
+        <form onSubmit={handleSubmit}>
+            <input type="email" placeholder="User Email" value={name} id={name} onChange={handleChange} required/>
             <Button type={"submit"}>OK</Button>
         </form>
         <br/>
         <Users/>
         <br/>
-        <input type="number" placeholder="Credits"  onChange={event => setCredit(parseInt(event.target.value))}/>
-        {credit}
-        <Button /*onClick={() =>updateOrgaCredits(4,credit)}*/>Ajouter les credits</Button>
+        <input type="number" placeholder="Credits"  onChange={event => setCreditUpdate(parseInt(event.target.value))}/>
+        {creditUpdate}
+        <Button onClick={() =>updateOrgaCredits()}>Ajouter les credits</Button>
 
 
     </div>
+
+
+
+
 };
 export default Reclamation;
