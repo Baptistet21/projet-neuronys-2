@@ -4,6 +4,7 @@ import "./Nav.css"
 import Users from "./Users";
 import { API, graphqlOperation } from 'aws-amplify';
 import {getIdByName, updateCredits} from "../graphql/queries";
+import {useCookies} from "react-cookie";
 
 
 
@@ -11,10 +12,12 @@ const Reclamation = () => {
     let [name, setName] = useState("");
     const [creditUpdate, setCreditUpdate] = useState(0);
     const [credit, setCredit] = useState(0);
-    let [id, setId] = useState([]);
+    let [id, setId] = useState(0);
     let NameConfirmation = useState("")
 
+    /* fonction qui permet le changement de credits*/
     async function updateOrgaCredits() {
+        /* pas de parametre encore*/
         const response = await API.graphql(graphqlOperation(updateCredits))
         console.log("mutation",response);
     }
@@ -61,7 +64,7 @@ const Reclamation = () => {
     };
 
     return <div className={"Reclamation"}>
-        <h3>id :{id}</h3>
+        <h3>id : {id} credits : {credit}</h3>
         <h1 style={{color:"#666"}}>Reclamation</h1>
         <form onSubmit={handleSubmit}>
             <input type="email" placeholder="User Email" value={name} id={name} onChange={handleChange} required/>
