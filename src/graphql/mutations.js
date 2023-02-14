@@ -1,6 +1,29 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+
+/* changement d'orga pour user*/
+export const updateUser_orga = /* GraphQL */ `
+mutation MyMutation {
+    updateUser(input: {id: "", orga_id: ""}) {
+        id
+        email
+        orga_id
+    }
+}
+`;
+
+/* mutation ajout credit*/
+
+export const updateCredits = `mutation MyMutation {
+  updateOrganisationCredits(input: {id: "", credits: }) {
+    id
+    name
+    credits
+  }
+}
+`;
+
 export const createOrganisation = /* GraphQL */ `
   mutation CreateOrganisation(
     $input: CreateOrganisationInput!

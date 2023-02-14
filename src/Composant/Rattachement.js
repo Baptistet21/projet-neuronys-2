@@ -2,7 +2,7 @@ import {Button} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import Users from "./Users";
 import "./Nav.css"
-import Orga from "./Orga";
+import Orga from "../Composant_delete/Orga";
 import OrgaJoin from "./OrgaJoin";
 import {API, graphqlOperation} from "aws-amplify";
 import {getIdByName, getIdUser} from "../graphql/queries";
@@ -58,7 +58,7 @@ const Reclamation = () => {
 
 
     return<div className={"Rattachement"}>
-        <h3>id : {idUser} credits : {creditsUser}</h3>
+        <h3>id : {idUser} credits : {creditsUser} idOrgaJoin: {idOrgaJoin}</h3>
 
         <h1 style={{color:"#666"}}>Rattachement</h1>
 
@@ -69,7 +69,7 @@ const Reclamation = () => {
         </form>
         <br/>
         <form>
-            <input type="text" placeholder="Organisation name" onChange={event => setOrganisation(event.target.value)} required/>
+            <input type="text" placeholder="Organisation name" value={organisation} onChange={event => setOrganisation(event.target.value)} required/>
             <Button type={"submit"}>OK</Button>
 
         </form>
@@ -77,7 +77,7 @@ const Reclamation = () => {
         <form>
         </form>
         <br/>
-       <Users/>
+       <Users id={idUser}/>
         <br/>
         <h2>Organisation Join : </h2>
         <ul>

@@ -4,7 +4,7 @@ import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
 import {useCookies} from "react-cookie";
 
-function OrgaJoin() {
+function OrgaJoin({organisation}) {
     const [orgaJoin, setOrgaJoin] = useState([]);
     const [Id, setId] = useState(0);
     const [cookies, setCookie] = useCookies(['OrgaJoinId']);

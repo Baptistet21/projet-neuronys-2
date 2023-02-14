@@ -38,24 +38,8 @@ query MyQuery {
 }
 
 `;
-/* mutation ajout credit*/
 
-export const updateCredits = `mutation MyMutation {
-  updateOrganisationCredits(input: {id: "4", credits: 18}) {
-    id
-    name
-    credits
-  }
-}
-`;
-export const updateUser_Orga =`
-mutation MyMutation {
-    updateUserOrga(input: {id: "3", orga_id: "4"}) {
-        id
-        email
-        orga_id
-    }
-}`;
+
 
 /* recup orga*/
 export const getOrgaByName = /* GraphQL */ `
@@ -74,9 +58,10 @@ query MyQuery {
 }
 `;
 
+/*recup user par rapport a son id*/
 export const getUserOrga = /* GraphQL */ `
-query MyQuery {
-    getUser(id: "4") {
+query MyQuery ($id : String) {
+    getUser(id: $id) {
         email
         id
         orga {
@@ -94,7 +79,7 @@ query MyQuery {
 
 /* recup id user*/
 export const getIdByName = /* GraphQL */ `
-query MyQuery ($email : String = "user4@toto.com") {
+query MyQuery ($email : String) {
     byEmail(email: $email) {
         items {
             id
