@@ -13,6 +13,19 @@ export default {
 }
 `;
         return query1
+    },
+
+    /* mutation changement d'orga*/
+    updateOrga(idUser, idOrga) {
+        const query2 = `
+   mutation MyMutation {
+  updateUser(input: {id: ${idUser}, orga_id: ${idOrga}}) {
+    id
+    orga_id
+  }
+}
+`;
+        return query2
     }
 
 

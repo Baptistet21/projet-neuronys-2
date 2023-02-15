@@ -50,6 +50,7 @@ query MyQuery  {
         listOrganisations(filter: {name: {eq: "${name}"}})  {
             items {
                 id
+                credits
                 users {
                     items {
                          id

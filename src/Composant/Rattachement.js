@@ -12,11 +12,11 @@ import mutation from "./mutation";
 
 
 const Rattachement = () => {
-    const [name, setName] = useState("");
-    const [organisation, setOrganisation] = useState("");
-    const [idUser, setIdUser] = useState([]);
-    const [creditsUser, setCreditsUser] = useState(0)
-    const [idUserOrga, setIdUserOrga] = useState([])
+    const [name, setName] = useState(""); /* email rentré dans form */
+    const [organisation, setOrganisation] = useState(""); /* nom orga rentré dans form */
+    const [idUser, setIdUser] = useState([]); /* resultat de getIdUser */
+    const [creditsUser, setCreditsUser] = useState(0) /* resultat de getCreditUser */
+    const [idOrga, setIdOrga] = useState([]) /* resultat de getOrganisationId */
     const [creditsOrga, setCreditsOrga] = useState(0)
 
 
@@ -24,8 +24,12 @@ const Rattachement = () => {
     /* rattachement + update credits */
     async function updateOrganisationUser() {
         let creditsValid = creditsUser + creditsOrga
-        const response = await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
+        const response = await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
+        const response2 = await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
         console.log("mutation",response);
+        console.log("mutation",response2);
+
+
     }
 
 
@@ -52,9 +56,11 @@ const Rattachement = () => {
 
     async function getOrganisationId() {
         const response = await API.graphql(graphqlOperation(query.getOrgaIdByName(organisation)));
-        const orgaList = response.data.listOrganisations.items[0].users.items.map(user => user.id);        console.log("idUserOrga",orgaList)
-        setIdUserOrga(orgaList[0])
-        return idUserOrga
+        const orgaList = response.data.listOrganisations.items[0].users.items.map(user => user.id);
+        const creditsList = response.data.listOrganisations.items.map(item => item.credits);
+        setCreditsOrga(creditsList[0])
+        setIdOrga(orgaList[0])
+        return idOrga
 
 
 
@@ -65,6 +71,7 @@ const Rattachement = () => {
         event.preventDefault();
         console.log('getId :',getIdUser())
         console.log('getCredit :',getCreditUser())
+
     };
 
     const handleSubmit2 = event => {
@@ -78,7 +85,6 @@ const Rattachement = () => {
 
     return<div className={"Rattachement"}>
         <h1 style={{color:"#666"}}>Rattachement</h1>
-
         <form onSubmit={handleSubmit}>
             <input type="text" placeholder="User Email" value={name} id={name} onChange={event => setName(event.target.value)} required/>
             <Button type={"submit"}>OK</Button>
@@ -98,7 +104,7 @@ const Rattachement = () => {
         <br/>
         <h2>Organisation Join : </h2>
         <ul>
-            {idUserOrga && <OrgaJoin id={idUserOrga}/>}
+            {idOrga && <OrgaJoin id={idOrga}/>}
         </ul>
         <br/>
         <Button onClick={() =>updateOrganisationUser()}>Confirmer</Button>
