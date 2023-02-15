@@ -5,6 +5,8 @@ import Users from "./Users";
 import { API, graphqlOperation } from 'aws-amplify';
 import {updateCredits} from "../graphql/mutations";
 import query from "./query"
+import mutation from "./mutation"
+
 import {getIdUser} from "../graphql/queries";
 
 const Reclamation = () => {
@@ -12,11 +14,13 @@ const Reclamation = () => {
     const [creditUpdate, setCreditUpdate] = useState(0);
     const [credit, setCredit] = useState(0);
     let [id, setId] = useState([]);
+    const [orgaId, setOrgaId] = useState(0);
+
 
     /* fonction qui permet le changement de credits*/
     async function updateOrgaCredits() {
-        /* pas de parametre encore*/
-        const response = await API.graphql(graphqlOperation(updateCredits))
+        let creditsValid = credit + creditUpdate
+        const response = await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
         console.log("mutation",response);
     }
 
@@ -37,12 +41,22 @@ const Reclamation = () => {
         return credit
     }
 
+    async function getOrgaId() {
+
+        const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
+        const creditList = response.data.byEmail.items.map(item => item.orga.id)
+        setOrgaId(creditList[0])
+        return orgaId
+    }
+
     console.log('id',id)
     const handleSubmit = event => {
 
         event.preventDefault();
         console.log('getId :',getId())
         console.log('getCredit :',getCredit())
+        console.log('getCredit :',getOrgaId())
+
 
 
 
@@ -63,7 +77,6 @@ const Reclamation = () => {
         {id ? <Users idUser={id}/> : <div>Aucun utilisateur sélectionné</div>}
         <br/>
         <input type="number" placeholder="Credits"  onChange={event => setCreditUpdate(parseInt(event.target.value))}/>
-        {creditUpdate}
         <Button onClick={() =>updateOrgaCredits()}>Ajouter les credits</Button>
 
 

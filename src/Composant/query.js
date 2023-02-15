@@ -11,6 +11,7 @@ query MyQuery {
         items {
             id
         orga {
+            id
             credits
             }
         }

@@ -8,14 +8,25 @@ import {API, graphqlOperation} from "aws-amplify";
 import {getIdByName, getIdUser} from "../graphql/queries";
 import {useCookies} from "react-cookie";
 import query from "./query";
+import mutation from "./mutation";
 
 
-const Reclamation = () => {
+const Rattachement = () => {
     const [name, setName] = useState("");
     const [organisation, setOrganisation] = useState("");
     const [idUser, setIdUser] = useState([]);
     const [creditsUser, setCreditsUser] = useState(0)
     const [idUserOrga, setIdUserOrga] = useState([])
+    const [creditsOrga, setCreditsOrga] = useState(0)
+
+
+
+    /* rattachement + update credits */
+    async function updateOrganisationUser() {
+        let creditsValid = creditsUser + creditsOrga
+        const response = await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
+        console.log("mutation",response);
+    }
 
 
     /* recup id user*/
@@ -90,10 +101,10 @@ const Reclamation = () => {
             {idUserOrga && <OrgaJoin id={idUserOrga}/>}
         </ul>
         <br/>
-        <Button>Confirmer</Button>
+        <Button onClick={() =>updateOrganisationUser()}>Confirmer</Button>
 
 
     </div>
 };
 
-export default Reclamation;
+export default Rattachement;
