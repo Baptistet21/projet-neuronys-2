@@ -1,6 +1,8 @@
 
 /* recup id user et credits*/
 
+import {getOrgaByName} from "../graphql/queries";
+
 export default {
     getIdByName(email) {
         const query = `
@@ -17,7 +19,6 @@ query MyQuery {
 `;
         return query;
     },
-    //User Infos:
 
     /*recup user par rapport a son id*/
 
@@ -40,6 +41,45 @@ query MyQuery  {
 }
 `;
         return query2;
+    },
+    /* recup orga id*/
+    getOrgaIdByName(name) {
+        const query3 =  `
+    query MyQuery {
+        listOrganisations(filter: {name: {eq: "${name}"}})  {
+            items {
+                id
+                users {
+                    items {
+                         id
+                        }
+                        }
+
+        }
     }
-    //User Infos:
+}
+`;
+        return query3;
+    },
+
+    /* recup orga items*/
+    getOrgaByID(id) {
+        const query4 =  `
+    query MyQuery {
+    getOrganisation(id: ${id}) {
+        users {
+            items {
+                orga {
+                    name
+                    credits
+                    orga_type
+                    stripe_id
+                }
+            }
+        }
+    }
+}
+`;
+        return query4;
+    }
 }

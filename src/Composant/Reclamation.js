@@ -5,12 +5,13 @@ import Users from "./Users";
 import { API, graphqlOperation } from 'aws-amplify';
 import {updateCredits} from "../graphql/mutations";
 import query from "./query"
+import {getIdUser} from "../graphql/queries";
 
 const Reclamation = () => {
     let [name, setName] = useState("");
     const [creditUpdate, setCreditUpdate] = useState(0);
     const [credit, setCredit] = useState(0);
-    let [id, setId] = useState(0);
+    let [id, setId] = useState([]);
 
     /* fonction qui permet le changement de credits*/
     async function updateOrgaCredits() {
@@ -36,9 +37,9 @@ const Reclamation = () => {
         return credit
     }
 
-
-
+    console.log('id',id)
     const handleSubmit = event => {
+
         event.preventDefault();
         console.log('getId :',getId())
         console.log('getCredit :',getCredit())
@@ -53,14 +54,13 @@ const Reclamation = () => {
     };
 
     return <div className={"Reclamation"}>
-        <h3>id : {id} credits : {credit}</h3>
         <h1 style={{color:"#666"}}>Reclamation</h1>
         <form onSubmit={handleSubmit}>
-            <input type="email" placeholder="User Email" value={name} id={name} onChange={handleChange} required/>
+            <input type="email" placeholder="User Email" onChange={handleChange} required/>
             <Button type={"submit"}>OK</Button>
         </form>
         <br/>
-        <Users idUser={id}/>
+        {id ? <Users idUser={id}/> : <div>Aucun utilisateur sélectionné</div>}
         <br/>
         <input type="number" placeholder="Credits"  onChange={event => setCreditUpdate(parseInt(event.target.value))}/>
         {creditUpdate}

@@ -3,38 +3,35 @@ import {getOrgaByName} from "../graphql/queries";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
 import {useCookies} from "react-cookie";
+import query from "./query";
 
-function OrgaJoin({organisation}) {
+function OrgaJoin({id}) {
     const [orgaJoin, setOrgaJoin] = useState([]);
-    const [Id, setId] = useState(0);
-    const [cookies, setCookie] = useCookies(['OrgaJoinId']);
 
-    useEffect(() => {
-        (async () => {
-            const response = await API.graphql(graphqlOperation(getOrgaByName));
-            const orgaList = response.data.listOrganisations.items
+    console.log("user organisation id",id)
+
+
+    async function getOrganisation() {
+            const response = await API.graphql(graphqlOperation(query.getOrgaByID(id)));
+            const orgaList = response.data.getOrganisation.users.items.map(item => item.orga)
             console.log('orga join',orgaList)
             setOrgaJoin(orgaList)
-            setId(orgaList.map(item => item.id))
-            console.log("setId",setId)
+            return orgaJoin
 
 
 
-        })();
-    }, []);
+        }
 
-    useEffect(() => {
-        console.log("id",Id)
-        setCookie('OrgaJoinId', Id, { path: '/' ,sameSite:'none',secure:true});
+        if (id !== 0){
+            console.log("getOrga",getOrganisation())
+        }
 
-    }, [Id]);
-    console.log("cookies",cookies)
+
 
 
 
     return (
         <div>
-            <h3>Id : {Id} </h3>
             <div>
                 {
                     orgaJoin.map(item => (

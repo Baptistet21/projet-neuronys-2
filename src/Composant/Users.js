@@ -23,9 +23,13 @@ function Users({idUser}) {
                 setOrga(orgaList)
             }
 
-    if(idUser!==0) {
-        console.log("getUser",getUser())
-    }
+        if(idUser.length > 0) {
+            console.log("getUser",getUser())
+        }
+      
+
+
+
     return (
 
         <div>

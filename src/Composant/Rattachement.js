@@ -7,6 +7,7 @@ import OrgaJoin from "./OrgaJoin";
 import {API, graphqlOperation} from "aws-amplify";
 import {getIdByName, getIdUser} from "../graphql/queries";
 import {useCookies} from "react-cookie";
+import query from "./query";
 
 
 const Reclamation = () => {
@@ -14,52 +15,57 @@ const Reclamation = () => {
     const [organisation, setOrganisation] = useState("");
     const [idUser, setIdUser] = useState([]);
     const [creditsUser, setCreditsUser] = useState(0)
+    const [idUserOrga, setIdUserOrga] = useState([])
 
-    /* recuperer le id de l'organisation a rejoindre*/
-    let [idOrgaJoin] = useCookies(['OrgaJoinId']);
-    idOrgaJoin = idOrgaJoin.OrgaJoinId[0]
-
-    console.log("idOrgaJoin",idOrgaJoin)
 
     /* recup id user*/
 
 
-    async function getIdUser({email}) {
-
-        const response = await API.graphql(graphqlOperation(getIdByName,{email}));
-        console.log(response)
+    async function getIdUser() {
+        const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
         const idList = response.data.byEmail.items.map(item => item.id);
         setIdUser(idList[0])
-        console.log('id user :',idUser)
         return idUser
+    }
+
+    /* recup credit user*/
+    async function getCreditUser() {
+
+        const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
+        const creditList = response.data.byEmail.items.map(item => item.orga.credits)
+        setCreditsUser(creditList[0])
+        return creditsUser
+    }
+
+    /* recuperer id organisation*/
+
+    async function getOrganisationId() {
+        const response = await API.graphql(graphqlOperation(query.getOrgaIdByName(organisation)));
+        const orgaList = response.data.listOrganisations.items[0].users.items.map(user => user.id);        console.log("idUserOrga",orgaList)
+        setIdUserOrga(orgaList[0])
+        return idUserOrga
+
+
+
+
     }
 
     const handleSubmit = event => {
         event.preventDefault();
-        console.log(`Name: ${name}`, typeof name);
-        console.log('getId :',getIdUser({name}))
-        console.log('name :',typeof name, name)
-        console.log('getCredit :',getCreditUser({name}))
-
-
-
+        console.log('getId :',getIdUser())
+        console.log('getCredit :',getCreditUser())
     };
 
-    /* recup credit user*/
-    async function getCreditUser({email}) {
+    const handleSubmit2 = event => {
+        event.preventDefault();
+        console.log('getOrgaJoin :',getOrganisationId())
+    };
 
-        const response = await API.graphql(graphqlOperation(getIdByName,{email}));
-        console.log(response)
-        const creditList = response.data.byEmail.items.map(item => item.orga.credits)
-        setCreditsUser(creditList[0])
-        console.log('credit :',creditsUser)
-        return creditsUser
-    }
+
+
 
 
     return<div className={"Rattachement"}>
-        <h3>id : {idUser} credits : {creditsUser} idOrgaJoin: {idOrgaJoin}</h3>
-
         <h1 style={{color:"#666"}}>Rattachement</h1>
 
         <form onSubmit={handleSubmit}>
@@ -68,7 +74,7 @@ const Reclamation = () => {
 
         </form>
         <br/>
-        <form>
+        <form onSubmit={handleSubmit2}>
             <input type="text" placeholder="Organisation name" value={organisation} onChange={event => setOrganisation(event.target.value)} required/>
             <Button type={"submit"}>OK</Button>
 
@@ -77,12 +83,11 @@ const Reclamation = () => {
         <form>
         </form>
         <br/>
-       <Users id={idUser}/>
+        {idUser ? <Users idUser={idUser}/> : <div>Aucun utilisateur sélectionné</div>}
         <br/>
         <h2>Organisation Join : </h2>
         <ul>
-            {organisation}
-            <OrgaJoin/>
+            {idUserOrga && <OrgaJoin id={idUserOrga}/>}
         </ul>
         <br/>
         <Button>Confirmer</Button>
