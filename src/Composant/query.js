@@ -51,11 +51,7 @@ query MyQuery  {
             items {
                 id
                 credits
-                users {
-                    items {
-                         id
-                        }
-                        }
+             
 
         }
     }
@@ -68,20 +64,33 @@ query MyQuery  {
     getOrgaByID(id) {
         const query4 =  `
     query MyQuery {
-    getOrganisation(id: ${id}) {
-        users {
-            items {
-                orga {
-                    name
-                    credits
-                    orga_type
-                    stripe_id
-                }
-            }
-        }
+  listOrganisations(filter: {id: {eq: ${id}}}) {
+    items {
+      id
+      name
+      credits
+      orga_type
+      stripe_id
     }
+  }
 }
+
 `;
         return query4;
+    },
+
+    /* recup list user */
+    getListUserByIdOrga(id) {
+        const query5 =  `
+query MyQuery {
+  usersByOrga_idAndPseudo(orga_id: ${id}) {
+    items {
+      id
+    }
+  }
+}
+
+`;
+        return query5;
     }
 }

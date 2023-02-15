@@ -13,7 +13,7 @@ function OrgaJoin({id}) {
 
     async function getOrganisation() {
             const response = await API.graphql(graphqlOperation(query.getOrgaByID(id)));
-            const orgaList = response.data.getOrganisation.users.items.map(item => item.orga)
+            const orgaList = response.data.listOrganisations.items
             console.log('orga join',orgaList)
             setOrgaJoin(orgaList)
             return orgaJoin

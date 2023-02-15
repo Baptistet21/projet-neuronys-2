@@ -56,15 +56,11 @@ const Rattachement = () => {
 
     async function getOrganisationId() {
         const response = await API.graphql(graphqlOperation(query.getOrgaIdByName(organisation)));
-        const orgaList = response.data.listOrganisations.items[0].users.items.map(user => user.id);
+        const orgaList = response.data.listOrganisations.items.map(item => item.id);
         const creditsList = response.data.listOrganisations.items.map(item => item.credits);
         setCreditsOrga(creditsList[0])
         setIdOrga(orgaList[0])
         return idOrga
-
-
-
-
     }
 
     const handleSubmit = event => {
