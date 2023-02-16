@@ -1,31 +1,26 @@
-import React,{useEffect, useState} from "react";
-import {getOrgaByName} from "../graphql/queries";
+import React, {useEffect, useState} from "react";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
-import {useCookies} from "react-cookie";
 import query from "./query";
 
 function OrgaJoin({id}) {
     const [orgaJoin, setOrgaJoin] = useState([]);
 
-    console.log("user organisation id",id)
-
 
     async function getOrganisation() {
-            const response = await API.graphql(graphqlOperation(query.getOrgaByID(id)));
-            const orgaList = response.data.listOrganisations.items
-            console.log('orga join',orgaList)
-            setOrgaJoin(orgaList)
-            return orgaJoin
+        const response = await API.graphql(graphqlOperation(query.getOrgaByID(id)));
+        const orgaList = response.data.listOrganisations.items
+        setOrgaJoin(orgaList)
+        return orgaJoin
+    }
 
+    /*permet de lancer qu'une seule fois la fonction*/
 
-
-        }
-
+    useEffect(() => {
         if (id !== 0){
             console.log("getOrga",getOrganisation())
         }
-
+    },[id]);
 
 
 

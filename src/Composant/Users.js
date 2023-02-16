@@ -1,8 +1,7 @@
-import React,{useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
 import query from "./query"
-
 
 
 
@@ -23,9 +22,15 @@ function Users({idUser}) {
                 setOrga(orgaList)
             }
 
-        if(idUser.length > 0) {
-            console.log("getUser",getUser())
-        }
+    /*permet de lancer qu'une seule fois la fonction*/
+
+    useEffect(() => {
+            if(idUser.length > 0) {
+                console.log("getUser",getUser())
+            }
+    },[idUser]);
+
+
       
 
 

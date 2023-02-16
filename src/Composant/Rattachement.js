@@ -1,12 +1,9 @@
 import {Button} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Users from "./Users";
 import "./Nav.css"
-import Orga from "../Composant_delete/Orga";
 import OrgaJoin from "./OrgaJoin";
 import {API, graphqlOperation} from "aws-amplify";
-import {getIdByName, getIdUser} from "../graphql/queries";
-import {useCookies} from "react-cookie";
 import query from "./query";
 import mutation from "./mutation";
 
@@ -18,24 +15,17 @@ const Rattachement = () => {
     const [creditsUser, setCreditsUser] = useState(0) /* resultat de getCreditUser */
     const [idOrga, setIdOrga] = useState([]) /* resultat de getOrganisationId */
     const [creditsOrga, setCreditsOrga] = useState(0)
-
+    const [userOrgaList, setUserOrgaList] = useState([]); /* resultat de getListUserByOrga */
 
 
     /* rattachement + update credits */
     async function updateOrganisationUser() {
         let creditsValid = creditsUser + creditsOrga
-        const response = await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
-        const response2 = await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
-        console.log("mutation",response);
-        console.log("mutation",response2);
-
-
+        await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
+        await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
     }
 
-
     /* recup id user*/
-
-
     async function getIdUser() {
         const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
         const idList = response.data.byEmail.items.map(item => item.id);
@@ -63,6 +53,15 @@ const Rattachement = () => {
         return idOrga
     }
 
+    /* recuperer list user par orga
+
+    async function getListUserByOrga() {
+        const response = await API.graphql(graphqlOperation(query.getListUserByIdOrga(idOrga)));
+        const userList = response.data.usersByOrga_idAndPseudo.items.orga.users_id;
+        setUserOrgaList(userList)
+        return userOrgaList
+    }
+*/
     const handleSubmit = event => {
         event.preventDefault();
         console.log('getId :',getIdUser())
@@ -81,8 +80,9 @@ const Rattachement = () => {
 
     return<div className={"Rattachement"}>
         <h1 style={{color:"#666"}}>Rattachement</h1>
+        <h3>User: {userOrgaList}</h3>
         <form onSubmit={handleSubmit}>
-            <input type="text" placeholder="User Email" value={name} id={name} onChange={event => setName(event.target.value)} required/>
+            <input type="email" placeholder="User Email" value={name} id={name} onChange={event => setName(event.target.value)} required/>
             <Button type={"submit"}>OK</Button>
 
         </form>

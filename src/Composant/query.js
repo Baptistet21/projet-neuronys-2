@@ -1,9 +1,9 @@
 
-/* recup id user et credits*/
-
-import {getOrgaByName} from "../graphql/queries";
 
 export default {
+    /* recup id user et credits*/
+
+
     getIdByName(email) {
         const query = `
 query MyQuery {
@@ -86,10 +86,12 @@ query MyQuery {
   usersByOrga_idAndPseudo(orga_id: ${id}) {
     items {
       id
+       orga {
+        users_id
+      }
     }
   }
 }
-
 `;
         return query5;
     }

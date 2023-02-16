@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "@mui/material";
 import "./Nav.css"
 import Users from "./Users";
 import { API, graphqlOperation } from 'aws-amplify';
-import {updateCredits} from "../graphql/mutations";
 import query from "./query"
 import mutation from "./mutation"
 
-import {getIdUser} from "../graphql/queries";
 
 const Reclamation = () => {
     let [name, setName] = useState("");
@@ -20,7 +18,7 @@ const Reclamation = () => {
     /* fonction qui permet le changement de credits*/
     async function updateOrgaCredits() {
         let creditsValid = credit + creditUpdate
-        const response = await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
+        await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
     }
 
     /* recup id user*/
@@ -51,11 +49,10 @@ const Reclamation = () => {
 
     console.log('id',id)
     const handleSubmit = event => {
-
-        event.preventDefault();
         console.log('getId :',getId())
         console.log('getCredit :',getCredit())
         console.log('getIdOrga :',getOrgaId())
+        event.preventDefault();
 
 
 
@@ -64,6 +61,7 @@ const Reclamation = () => {
 
     const handleChange = event => {
         setName(event.target.value);
+        console.log("email",name)
 
     };
 
