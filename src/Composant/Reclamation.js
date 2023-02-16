@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import "./Nav.css"
 import Users from "./Users";
 import { API, graphqlOperation } from 'aws-amplify';
@@ -20,6 +20,7 @@ const Reclamation = () => {
         let creditsValid = credit + creditUpdate
         await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
         window.alert(name + " a maintenant " + creditsValid + " credits")
+        window.location.reload()
 
     }
 
@@ -68,14 +69,16 @@ const Reclamation = () => {
     return <div className={"Reclamation"}>
         <h1 style={{color:"#666"}}>Reclamation</h1>
         <form onSubmit={handleSubmit}>
-            <input type="email" placeholder="User Email" onChange={handleChange} required/>
+            <TextField id={name} label="User Email" variant="standard" type="email" value={name} onChange={handleChange} required />
             <Button type={"submit"}>OK</Button>
         </form>
         <br/>
         {id ? <Users idUser={id}/> : <div>Aucun utilisateur sélectionné</div>}
         <br/>
-        <input type="number" placeholder="Credits"  onChange={event => setCreditUpdate(parseInt(event.target.value))}/>
-        <Button onClick={() =>updateOrgaCredits()}>Ajouter les credits</Button>
+        <TextField label="Credits" type="number" onChange={event => setCreditUpdate(parseInt(event.target.value))}></TextField>
+
+        <>   </>
+        <Button variant="contained" onClick={() =>updateOrgaCredits()}>Ajouter les credits</Button>
 
 
     </div>

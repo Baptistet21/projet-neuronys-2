@@ -1,4 +1,4 @@
-import {Button} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import React, {useState} from "react";
 import Users from "./Users";
 import "./Nav.css"
@@ -108,17 +108,18 @@ const Rattachement = message => {
     return<div className={"Rattachement"}>
         <h1 style={{color:"#666"}}>Rattachement</h1>
         <form onSubmit={handleSubmit}>
-            <input type="email" placeholder="User Email" value={name} id={name} onChange={event => setName(event.target.value)} required/>
+            <TextField id={name} label="User Email" variant="standard" type="email"value={name} onChange={event => setName(event.target.value)} required />
             <Button type={"submit"}>OK</Button>
 
         </form>
         <br/>
         <form onSubmit={handleSubmit2}>
-            <input type="text" placeholder="Organisation name" value={organisation} onChange={event => setOrganisation(event.target.value)} required/>
+            <TextField label="Organisation name" variant="standard" type="text" value={organisation} onChange={event => setOrganisation(event.target.value)} required />
             <Button type={"submit"}>OK</Button>
         </form>
+        <br/>
         <form onSubmit={handleSubmit3}>
-            <Button type={"submit"}>Valider</Button>
+            <Button variant="outlined" type={"submit"}>Valider</Button>
         </form>
         <br/>
         <form>
@@ -131,7 +132,7 @@ const Rattachement = message => {
             {idOrga && <OrgaJoin id={idOrga}/>}
         </ul>
         <br/>
-        <Button onClick={() =>updateOrganisationUser()}>Confirmer</Button>
+        <Button variant="contained" onClick={() =>updateOrganisationUser()}>Confirmer</Button>
 
 
     </div>
