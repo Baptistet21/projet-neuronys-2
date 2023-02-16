@@ -48,5 +48,11 @@ li a.active {
 h2 {
     text-align: left;
     margin-left: 5%;
-    color: #666
+    color: #FF7F50;
+    font-family: fantasy ;
+    font-weight: 300
 }
+
+h1{
+    font-family: fantasy  ;
+    font-weight: 600 }

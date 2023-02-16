@@ -106,7 +106,7 @@ const Rattachement = message => {
 
 
     return<div className={"Rattachement"}>
-        <h1 style={{color:"#666"}}>Rattachement</h1>
+        <h1 style={{color:"#099ac8"}}>Rattachement</h1>
         <form onSubmit={handleSubmit}>
             <TextField id={name} label="User Email" variant="standard" type="email"value={name} onChange={event => setName(event.target.value)} required />
             <Button type={"submit"}>OK</Button>

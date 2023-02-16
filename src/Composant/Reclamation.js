@@ -67,7 +67,7 @@ const Reclamation = () => {
     };
 
     return <div className={"Reclamation"}>
-        <h1 style={{color:"#666"}}>Reclamation</h1>
+        <h1 style={{color:"#099ac8"}}>Reclamation</h1>
         <form onSubmit={handleSubmit}>
             <TextField id={name} label="User Email" variant="standard" type="email" value={name} onChange={handleChange} required />
             <Button type={"submit"}>OK</Button>
