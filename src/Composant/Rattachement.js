@@ -8,7 +8,7 @@ import query from "./query";
 import mutation from "./mutation";
 
 
-const Rattachement = () => {
+const Rattachement = message => {
     const [name, setName] = useState(""); /* email rentré dans form */
     const [organisation, setOrganisation] = useState(""); /* nom orga rentré dans form */
     const [idUser, setIdUser] = useState([]); /* resultat de getIdUser */
@@ -16,14 +16,33 @@ const Rattachement = () => {
     const [idOrga, setIdOrga] = useState([]) /* resultat de getOrganisationId */
     const [creditsOrga, setCreditsOrga] = useState(0)
     const [userOrgaList, setUserOrgaList] = useState([]); /* resultat de getListUserByOrga */
+    let [validButton,setValidButton] = useState("false") /* button validation */
 
 
     /* rattachement + update credits */
     async function updateOrganisationUser() {
-        let creditsValid = creditsUser + creditsOrga
-        await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
-        await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
+        if(validButton === "true"){
+        if (userOrgaList.includes(idUser)) {
+            window.alert(name + " a déjà été ajouté à l'organisation : " + organisation)
+            window.location.reload()
+
+        } else {
+            let creditsValid = creditsUser + creditsOrga
+            await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
+            await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
+            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, userOrgaList)));
+            window.alert(name + " a été ajouté à l'organisation : " + organisation)
+            window.location.reload()
+
+            }}
+        else {
+            window.alert("Vous devez valider avant de confirmer")
+
+        }
+
     }
+
+
 
     /* recup id user*/
     async function getIdUser() {
@@ -53,15 +72,16 @@ const Rattachement = () => {
         return idOrga
     }
 
-    /* recuperer list user par orga
+    /* recuperer list user par orga*/
 
     async function getListUserByOrga() {
         const response = await API.graphql(graphqlOperation(query.getListUserByIdOrga(idOrga)));
-        const userList = response.data.usersByOrga_idAndPseudo.items.orga.users_id;
-        setUserOrgaList(userList)
+        const userList = response.data.usersByOrga_idAndPseudo.items.map(item => item.orga.users_id);
+        setUserOrgaList(userList[0])
+        console.log("user",userList)
         return userOrgaList
     }
-*/
+
     const handleSubmit = event => {
         event.preventDefault();
         console.log('getId :',getIdUser())
@@ -72,15 +92,21 @@ const Rattachement = () => {
     const handleSubmit2 = event => {
         event.preventDefault();
         console.log('getOrgaJoin :',getOrganisationId())
+
     };
 
 
-
+    const handleSubmit3 = event => {
+        event.preventDefault();
+        console.log('getOrgaJoin :',getListUserByOrga())
+        console.log("userOrgaList",userOrgaList)
+        setValidButton("true")
+        console.log("validbutton", validButton)
+    };
 
 
     return<div className={"Rattachement"}>
         <h1 style={{color:"#666"}}>Rattachement</h1>
-        <h3>User: {userOrgaList}</h3>
         <form onSubmit={handleSubmit}>
             <input type="email" placeholder="User Email" value={name} id={name} onChange={event => setName(event.target.value)} required/>
             <Button type={"submit"}>OK</Button>
@@ -90,7 +116,9 @@ const Rattachement = () => {
         <form onSubmit={handleSubmit2}>
             <input type="text" placeholder="Organisation name" value={organisation} onChange={event => setOrganisation(event.target.value)} required/>
             <Button type={"submit"}>OK</Button>
-
+        </form>
+        <form onSubmit={handleSubmit3}>
+            <Button type={"submit"}>Valider</Button>
         </form>
         <br/>
         <form>

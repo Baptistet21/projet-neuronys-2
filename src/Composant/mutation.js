@@ -26,7 +26,20 @@ export default {
 }
 `;
         return query2
+    },
+    /* mutation update group user orga*/
+    updateListUserOrga(idOrga, listUser) {
+        const query3 = `
+mutation MyMutation {
+  updateOrganisation(input: {id: ${idOrga}, users_id: ${listUser}}) {
+    credits
+    users_id
+  }
+}
+`;
+        return query3
     }
+
 
 
 }

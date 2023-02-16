@@ -19,6 +19,8 @@ const Reclamation = () => {
     async function updateOrgaCredits() {
         let creditsValid = credit + creditUpdate
         await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
+        window.alert(name + " a maintenant " + creditsValid + " credits")
+
     }
 
     /* recup id user*/
@@ -47,12 +49,11 @@ const Reclamation = () => {
         return orgaId
     }
 
-    console.log('id',id)
     const handleSubmit = event => {
+        event.preventDefault();
         console.log('getId :',getId())
         console.log('getCredit :',getCredit())
         console.log('getIdOrga :',getOrgaId())
-        event.preventDefault();
 
 
 
@@ -61,7 +62,6 @@ const Reclamation = () => {
 
     const handleChange = event => {
         setName(event.target.value);
-        console.log("email",name)
 
     };
 

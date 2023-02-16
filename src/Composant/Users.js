@@ -8,17 +8,12 @@ import query from "./query"
 function Users({idUser}) {
     const [users, setUsers] = useState([]);
     const [orga, setOrga] = useState([]);
-    console.log("idUser",idUser)
 
         async function getUser() {
-            console.log(idUser)
                 const response = await API.graphql(graphqlOperation(query.getUserOrga(idUser)));
-                console.log(response)
                 const userList = response.data.getUser
                 const orgaList = response.data.getUser.orga
-                console.log('user list', userList)
                 setUsers(userList)
-                console.log('orga list', orgaList)
                 setOrga(orgaList)
             }
 
