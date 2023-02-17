@@ -20,6 +20,8 @@ ul {
     overflow: hidden;
     border: 1px solid #e7e7e7;
     background-color: #f3f3f3;
+    color:#099ac8;
+    font-size: 20px;
 }
 
 li {
@@ -48,7 +50,7 @@ li a.active {
 h2 {
     text-align: left;
     margin-left: 5%;
-    color: #FF7F50;
+    color: #e88b01;
     font-family: fantasy ;
     font-weight: 300
 }

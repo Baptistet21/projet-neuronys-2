@@ -8,7 +8,7 @@ import query from "./query";
 import mutation from "./mutation";
 
 
-const Rattachement = message => {
+const Rattachement = () => {
     const [name, setName] = useState(""); /* email rentré dans form */
     const [organisation, setOrganisation] = useState(""); /* nom orga rentré dans form */
     const [idUser, setIdUser] = useState([]); /* resultat de getIdUser */
@@ -30,7 +30,7 @@ const Rattachement = message => {
             let creditsValid = creditsUser + creditsOrga
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
             await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
-            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, userOrgaList)));
+       /*     await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, userOrgaList)));*/
             window.alert(name + " a été ajouté à l'organisation : " + organisation)
             window.location.reload()
 
@@ -99,13 +99,12 @@ const Rattachement = message => {
     const handleSubmit3 = event => {
         event.preventDefault();
         console.log('getOrgaJoin :',getListUserByOrga())
-        console.log("userOrgaList",userOrgaList)
         setValidButton("true")
-        console.log("validbutton", validButton)
     };
 
 
     return<div className={"Rattachement"}>
+        <h2>user : {userOrgaList}</h2>
         <h1 style={{color:"#099ac8"}}>Rattachement</h1>
         <form onSubmit={handleSubmit}>
             <TextField id={name} label="User Email" variant="standard" type="email"value={name} onChange={event => setName(event.target.value)} required />

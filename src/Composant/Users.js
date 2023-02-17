@@ -2,6 +2,13 @@ import React, {useEffect, useState} from "react";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
 import query from "./query"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import {styled, TableCell, tableCellClasses} from "@mui/material";
 
 
 
@@ -26,11 +33,65 @@ function Users({idUser}) {
     },[idUser]);
 
 
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor:  theme.palette.primary.dark,
+            color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 20,
+        },
+    }));
+
       
 
 
 
     return (
+        /*
+        <TableContainer component={Paper}>
+            <br/> <br/>
+            <h2>User : </h2>
+
+            <Table aria-label="customized table">
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell align="center">email</StyledTableCell>
+                        <StyledTableCell align="center">pseudo</StyledTableCell>
+                        <StyledTableCell align="center">orga_rank</StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                            <StyledTableCell align="center">{users.email}</StyledTableCell>
+                            <StyledTableCell align="center">{users.pseudo}</StyledTableCell>
+                            <StyledTableCell align="center">{users.orga_rank}</StyledTableCell>
+
+                </TableBody>
+            </Table>
+            <br/>
+            <h2>Organisation : </h2>
+
+            <Table aria-label="customized table">
+            <TableHead>
+                <TableRow>
+                    <StyledTableCell align="center">Organisation name</StyledTableCell>
+                    <StyledTableCell align="center">credits</StyledTableCell>
+                    <StyledTableCell align="center">orga_type</StyledTableCell>
+                    <StyledTableCell align="center">stripe_id</StyledTableCell>
+
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                    <StyledTableCell align="center">{orga.name}</StyledTableCell>
+                    <StyledTableCell align="center">{orga.credits}</StyledTableCell>
+                    <StyledTableCell align="center">{orga.orga_type}</StyledTableCell>
+                    <StyledTableCell align="center">{orga.stripe_id}</StyledTableCell>
+
+            </TableBody>
+        </Table>
+    </TableContainer>
+    );*/
+
 
         <div>
             <h2>User : </h2>

@@ -19,9 +19,10 @@ export default {
     updateOrga(idUser, idOrga) {
         const query2 = `
    mutation MyMutation {
-  updateUser(input: {id: ${idUser}, orga_id: ${idOrga}}) {
+  updateUser(input: {id: ${idUser}, orga_id: ${idOrga}, , orga_rank: moldu}) {
     id
     orga_id
+    orga_rank
   }
 }
 `;
