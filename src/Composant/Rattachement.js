@@ -11,11 +11,18 @@ import mutation from "./mutation";
 const Rattachement = () => {
     const [name, setName] = useState(""); /* email rentré dans form */
     const [organisation, setOrganisation] = useState(""); /* nom orga rentré dans form */
+
+    /*User*/
     const [idUser, setIdUser] = useState([]); /* resultat de getIdUser */
     const [creditsUser, setCreditsUser] = useState(0) /* resultat de getCreditUser */
+    const [idOrgaUser, setIdOrgaUser] = useState([])
+
+
+    /*Orga join*/
     const [idOrga, setIdOrga] = useState([]) /* resultat de getOrganisationId */
     const [creditsOrga, setCreditsOrga] = useState(0)
-    const [userOrgaList, setUserOrgaList] = useState([]); /* resultat de getListUserByOrga */
+    let [userOrgaList, setUserOrgaList] = useState([]); /* resultat de getListUserByOrga */
+
     let [validButton,setValidButton] = useState("false") /* button validation */
 
 
@@ -34,6 +41,8 @@ const Rattachement = () => {
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
             await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
             await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, [userOrgaList])));
+          /*  await API.graphql(graphqlOperation(mutation.updateTypeOrga(idOrgaUser)));*/
+
             window.alert(name + " a été ajouté à l'organisation : " + organisation)
             window.location.reload()
 
@@ -60,6 +69,8 @@ const Rattachement = () => {
 
         const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
         const creditList = response.data.byEmail.items.map(item => item.orga.credits)
+        const orgaUserList = response.data.byEmail.items.map(item => item.orga.id)
+        setIdOrgaUser(orgaUserList[0])
         setCreditsUser(creditList[0])
         return creditsUser
     }
