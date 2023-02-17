@@ -41,7 +41,7 @@ const Rattachement = () => {
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
             await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
             await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, [userOrgaList])));
-          /*  await API.graphql(graphqlOperation(mutation.updateTypeOrga(idOrgaUser)));*/
+            await API.graphql(graphqlOperation(mutation.updateTypeOrga(idOrgaUser)));
 
             window.alert(name + " a été ajouté à l'organisation : " + organisation)
             window.location.reload()
