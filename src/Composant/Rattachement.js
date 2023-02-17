@@ -22,15 +22,18 @@ const Rattachement = () => {
     /* rattachement + update credits */
     async function updateOrganisationUser() {
         if(validButton === "true"){
-        if (userOrgaList.includes(idUser)) {
+        if (userOrgaList.includes([idUser])) {
             window.alert(name + " a déjà été ajouté à l'organisation : " + organisation)
             window.location.reload()
 
         } else {
+
             let creditsValid = creditsUser + creditsOrga
+            userOrgaList.push(idUser)
+            console.log('user',[userOrgaList])
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid)));
             await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga)));
-       /*     await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, userOrgaList)));*/
+            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, [userOrgaList])));
             window.alert(name + " a été ajouté à l'organisation : " + organisation)
             window.location.reload()
 
@@ -78,7 +81,6 @@ const Rattachement = () => {
         const response = await API.graphql(graphqlOperation(query.getListUserByIdOrga(idOrga)));
         const userList = response.data.usersByOrga_idAndPseudo.items.map(item => item.orga.users_id);
         setUserOrgaList(userList[0])
-        console.log("user",userList)
         return userOrgaList
     }
 
@@ -93,6 +95,7 @@ const Rattachement = () => {
         event.preventDefault();
         console.log('getOrgaJoin :',getOrganisationId())
 
+
     };
 
 
@@ -100,6 +103,9 @@ const Rattachement = () => {
         event.preventDefault();
         console.log('getOrgaJoin :',getListUserByOrga())
         setValidButton("true")
+
+
+
     };
 
 

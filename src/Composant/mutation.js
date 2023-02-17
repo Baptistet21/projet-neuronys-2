@@ -32,11 +32,11 @@ export default {
     updateListUserOrga(idOrga, listUser) {
         const query3 = `
 mutation MyMutation {
-  updateOrganisation(input: {id: ${idOrga}, users_id: ${listUser}}) {
-    credits
-    users_id
+  updateOrganisation(input: {id: ${idOrga}, users_id: "${listUser}"}) {
+    id
   }
 }
+
 `;
         return query3
     }
