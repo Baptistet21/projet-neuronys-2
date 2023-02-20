@@ -16,6 +16,11 @@ const Nav = () =>{
                         Rattachement
                     </Link>
                 </li>
+                <li >
+                    <Link to="/upgrade" >
+                        Upgrade
+                    </Link>
+                </li>
             </ul>
         </nav>
     )

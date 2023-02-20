@@ -9,6 +9,7 @@ import {withAuthenticator} from "@aws-amplify/ui-react";
 import {Routes,Route} from "react-router-dom";
 import Reclamation from "./Composant/Reclamation";
 import Rattachement from "./Composant/Rattachement";
+import Upgrade from "./Composant/Upgrade";
 
 
 Amplify.configure(config);
@@ -32,6 +33,7 @@ function App() {
       <Routes>
         <Route path="/reclamation" element={<Reclamation/>}/>
         <Route path="/rattachement" element={<Rattachement/>}/>
+        <Route path="/upgrade" element={<Upgrade/>}/>
 
 
       </Routes>

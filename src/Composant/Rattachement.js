@@ -4,8 +4,8 @@ import Users from "./Users";
 import "./Nav.css"
 import OrgaJoin from "./OrgaJoin";
 import {API, graphqlOperation} from "aws-amplify";
-import query from "./query";
-import mutation from "./mutation";
+import query from "../Fonction_graphql/query";
+import mutation from "../Fonction_graphql/mutation";
 
 
 const Rattachement = () => {
@@ -23,6 +23,8 @@ const Rattachement = () => {
     const [idOrga, setIdOrga] = useState([]) /* resultat de getOrganisationId */
     const [creditsOrga, setCreditsOrga] = useState(0)
     let [userOrgaList, setUserOrgaList] = useState([]); /* resultat de getListUserByOrga */
+    const [TypeOrgaJoin,setTypeOrgaJoin] = useState("")
+
 
     let [validButton,setValidButton] = useState("false") /* button validation */
 
@@ -40,7 +42,12 @@ const Rattachement = () => {
             window.location.reload()
 
         }
-        else  if (TypeOrgaUser === "solo" || !userOrgaList.includes(idUser)){
+        else if (TypeOrgaJoin !== "team") {
+            window.alert(organisation + " n'est pas une organisation team ")
+            window.location.reload()
+
+        }
+        else  if (TypeOrgaUser === "solo" || !userOrgaList.includes(idUser) || TypeOrgaJoin === "team"){
 
             let creditsValid = creditsUser + creditsOrga
             userOrgaList.push(idUser)
@@ -94,8 +101,10 @@ const Rattachement = () => {
         const response = await API.graphql(graphqlOperation(query.getOrgaIdByName(organisation)));
         const orgaList = response.data.listOrganisations.items.map(item => item.id);
         const creditsList = response.data.listOrganisations.items.map(item => item.credits);
+        const TypeList = response.data.listOrganisations.items.map(item => item.orga_type);
         setCreditsOrga(creditsList[0])
         setIdOrga(orgaList[0])
+        setTypeOrgaJoin(TypeList[0])
         return idOrga
     }
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
-import query from "./query"
+import query from "../Fonction_graphql/query"
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
@@ -110,6 +110,8 @@ function Users({idUser}) {
                     <p>credits : {orga.credits}</p>
                     <p>orga_type : {orga.orga_type}</p>
                     <p>stripe_id : {orga.stripe_id}</p>
+                    <p>users_id : {orga.users_id}</p>
+
                 </div>
             </ul>
             <br/>

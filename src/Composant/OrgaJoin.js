@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {graphqlOperation} from "@aws-amplify/api-graphql";
 import {API} from "aws-amplify";
-import query from "./query";
+import query from "../Fonction_graphql/query";
 
 function OrgaJoin({id}) {
     const [orgaJoin, setOrgaJoin] = useState([]);
@@ -35,6 +35,7 @@ function OrgaJoin({id}) {
                             <p>credits : {item.credits}</p>
                             <p>orga_type : {item.orga_type}</p>
                             <p>stripe_id : {item.stripe_id}</p>
+                            <p>users_id : {item.users_id}</p>
 
 
 

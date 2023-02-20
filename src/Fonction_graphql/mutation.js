@@ -43,10 +43,10 @@ mutation MyMutation {
     },
 
     /* mutation update type user orga*/
-    updateTypeOrga(idOrga) {
+    updateTypeOrga(idOrga,type) {
         const query4 = `
 mutation MyMutation {
-  updateOrganisation(input: {id: ${idOrga}, orga_type: orphan}) {
+  updateOrganisation(input: {id: ${idOrga}, orga_type: ${type}}) {
     id
   }
 }

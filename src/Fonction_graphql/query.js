@@ -37,6 +37,7 @@ query MyQuery  {
             credits
             orga_type
             stripe_id
+            users_id
 
         }
         orga_rank
@@ -54,6 +55,7 @@ query MyQuery  {
             items {
                 id
                 credits
+                orga_type
 
                 
              
@@ -76,6 +78,7 @@ query MyQuery  {
       credits
       orga_type
       stripe_id
+      users_id
     }
   }
 }
