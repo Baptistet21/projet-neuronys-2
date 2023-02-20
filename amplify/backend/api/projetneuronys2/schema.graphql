@@ -44,5 +44,5 @@ enum orgaRank {
 enum orgaType {
   solo
   team
-  vide
+  orphan
 }

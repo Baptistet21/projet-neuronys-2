@@ -13,6 +13,8 @@ query MyQuery {
         orga {
             id
             credits
+            orga_type
+
             }
         }
     }
@@ -51,6 +53,8 @@ query MyQuery  {
             items {
                 id
                 credits
+
+                
              
 
         }

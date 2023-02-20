@@ -29,10 +29,10 @@ export default {
         return query2
     },
     /* mutation update group user orga*/
-    updateListUserOrga(idOrga, listUser) {
+    updateListUserOrga(idOrga, listUser,type) {
         const query3 = `
 mutation MyMutation {
-  updateOrganisation(input: {id: ${idOrga}, users_id: "${listUser}", orga_type: team}) {
+  updateOrganisation(input: {id: ${idOrga}, users_id: "${listUser}", orga_type: ${type}}) {
     id
     orga_type
   }
@@ -46,7 +46,7 @@ mutation MyMutation {
     updateTypeOrga(idOrga) {
         const query4 = `
 mutation MyMutation {
-  updateOrganisation(input: {id: ${idOrga}, orga_type: vide}) {
+  updateOrganisation(input: {id: ${idOrga}, orga_type: orphan}) {
     id
   }
 }
