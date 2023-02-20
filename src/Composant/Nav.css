@@ -58,3 +58,10 @@ h2 {
 h1{
     font-family: fantasy  ;
     font-weight: 600 }
+
+h3 {
+    text-align: center;
+    color: #e88b01;
+    font-family: fantasy ;
+    font-weight: 100
+}
