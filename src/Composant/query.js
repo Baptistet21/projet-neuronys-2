@@ -10,6 +10,7 @@ query MyQuery {
     byEmail(email: "${email}") {
         items {
             id
+            orga_rank
         orga {
             id
             credits

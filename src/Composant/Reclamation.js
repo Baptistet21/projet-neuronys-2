@@ -13,22 +13,32 @@ const Reclamation = () => {
     const [credit, setCredit] = useState(0); /* credits form */
     let [id, setId] = useState([]); /* id user */
     const [orgaId, setOrgaId] = useState(0); /* id orga */
+    let [TypeRankUser, setRankUser] = useState(""); /* rank user */
+
 
 
     /* fonction qui permet le changement de credits*/
     async function updateOrgaCredits() {
-        let creditsValid = credit + creditUpdate
-        await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
-        window.alert(name + " a maintenant " + creditsValid + " credits")
-        window.location.reload()
+        if(TypeRankUser === "admin") {
+            let creditsValid = credit + creditUpdate
+            await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
+            window.alert(name + " a maintenant " + creditsValid + " credits")
+            window.location.reload()
+        }
+        else{
+            window.alert(name + " n'est pas admin ")
+            window.location.reload()
+        }
 
     }
 
     /* recup id user*/
     async function getId() {
-            const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
-            const idList = response.data.byEmail.items.map(item => item.id);
-            setId(idList[0])
+        const response = await API.graphql(graphqlOperation(query.getIdByName(name)));
+        const idList = response.data.byEmail.items.map(item => item.id);
+        const RankList = response.data.byEmail.items.map(item => item.orga_rank)
+        setId(idList[0])
+        setRankUser(RankList[0])
             return id
     }
 
