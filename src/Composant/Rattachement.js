@@ -153,11 +153,11 @@ const Rattachement = () => {
         <form>
         </form>
         <br/>
-        {idUser ? <Users idUser={idUser}/> : <div>Aucun utilisateur sélectionné</div>}
+        {idUser ? <Users idUser={idUser}/> : <div> Aucun utilisateur trouvé </div>}
         <br/>
         <h2>Organisation Join : </h2>
         <ul>
-            {idOrga && <OrgaJoin id={idOrga}/>}
+            {idOrga ? <OrgaJoin id={idOrga}/> : <div> Aucune organisation trouvée </div>}
         </ul>
         <br/>
         <Button variant="contained" onClick={() =>updateOrganisationUser()}>Confirmer</Button>
