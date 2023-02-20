@@ -8,11 +8,11 @@ import mutation from "./mutation"
 
 
 const Reclamation = () => {
-    let [name, setName] = useState("");
-    const [creditUpdate, setCreditUpdate] = useState(0);
-    const [credit, setCredit] = useState(0);
-    let [id, setId] = useState([]);
-    const [orgaId, setOrgaId] = useState(0);
+    let [name, setName] = useState(""); /* email form */
+    const [creditUpdate, setCreditUpdate] = useState(0); /* credits orga */
+    const [credit, setCredit] = useState(0); /* credits form */
+    let [id, setId] = useState([]); /* id user */
+    const [orgaId, setOrgaId] = useState(0); /* id orga */
 
 
     /* fonction qui permet le changement de credits*/

@@ -30,7 +30,7 @@ const Rattachement = () => {
     /* rattachement + update credits */
     async function updateOrganisationUser() {
         if(validButton === "true"){
-        if (userOrgaList.includes([idUser])) {
+        if (userOrgaList.includes(idUser)) {
             window.alert(name + " a déjà été ajouté à l'organisation : " + organisation)
             window.location.reload()
 
@@ -40,16 +40,17 @@ const Rattachement = () => {
             window.location.reload()
 
         }
-        else {
+        else  if (TypeOrgaUser === "solo" || !userOrgaList.includes(idUser)){
 
             let creditsValid = creditsUser + creditsOrga
             userOrgaList.push(idUser)
             console.log('user',[userOrgaList])
-            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, [userOrgaList],"team")));/* update de la liste des users de la nouvelle organisation + changement de type*/
-            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrgaUser, [],"orphan")));/* liste des users ancienne organisation est vide + changement de type */
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid))); /* transfert des credits dans la nouvelle organisation*/
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrgaUser, 0))); /* l'ancienne organisation perd ses credits */
             await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga))); /* changement organisation pour User*/
+            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrga, [userOrgaList],"team")));/* update de la liste des users de la nouvelle organisation + changement de type*/
+            await API.graphql(graphqlOperation(mutation.updateListUserOrga(idOrgaUser, [],"orphan")));/* liste des users ancienne organisation est vide + changement de type */
+
 
             window.alert(name + " a été ajouté à l'organisation : " + organisation)
             window.location.reload()
