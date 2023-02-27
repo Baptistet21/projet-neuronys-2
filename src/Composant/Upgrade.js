@@ -20,11 +20,11 @@ const Upgrade = () => {
 
     /* fonction qui permet le changement de credits*/
     async function updateOrga() {
-        if(TypeOrga === "solo") {
+        if(TypeOrga !== "team") {
             let creditsValid = credit + creditUpdate
             await API.graphql(graphqlOperation(mutation.updateCredits(orgaId, creditsValid)));
             await API.graphql(graphqlOperation(mutation.updateTypeOrga(orgaId, "team")));
-
+            window.alert(this.email + " appartient maintenant à une organisation team avec " + creditsValid + "credits.")
             window.location.reload()
         }
         else{
@@ -64,6 +64,8 @@ const Upgrade = () => {
     const handleSubmit2 = event => {
         event.preventDefault();
         console.log('getCreditEtId :',getOrga())
+        window.alert(creditUpdate + " crédits vont être ajouté à l'organisation team de " + name +", une fois validé");
+
     };
     const handleChange = event => {
         setName(event.target.value);
@@ -85,7 +87,7 @@ const Upgrade = () => {
         {id ? <Users idUser={id}/> : <div>Aucun utilisateur sélectionné</div>}
         <br/>
         <>   </>
-        <h3>{creditUpdate} crédits vont être ajouté à l'organisation de {name}</h3>
+        <h3>{creditUpdate} crédits vont être ajouté à l'organisation team de {name}</h3>
         <Button variant="contained" onClick={() =>updateOrga()}>Confirmer</Button>
 
 

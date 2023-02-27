@@ -51,7 +51,6 @@ const Rattachement = () => {
 
             let creditsValid = creditsUser + creditsOrga
             userOrgaList.push(idUser)
-            console.log('user',[userOrgaList])
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrga, creditsValid))); /* transfert des credits dans la nouvelle organisation*/
             await API.graphql(graphqlOperation(mutation.updateCredits(idOrgaUser, 0))); /* l'ancienne organisation perd ses credits */
             await API.graphql(graphqlOperation(mutation.updateOrga(idUser, idOrga))); /* changement organisation pour User*/
@@ -159,8 +158,6 @@ const Rattachement = () => {
             <Button variant="outlined" type={"submit"}>Valider</Button>
         </form>
         <br/>
-        <form>
-        </form>
         <br/>
         {idUser ? <Users idUser={idUser}/> : <div> Aucun utilisateur trouvé </div>}
         <br/>

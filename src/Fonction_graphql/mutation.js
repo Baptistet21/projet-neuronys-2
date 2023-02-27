@@ -30,9 +30,10 @@ export default {
     },
     /* mutation update group user orga*/
     updateListUserOrga(idOrga, listUser,type) {
+        const userListString = JSON.stringify(listUser);
         const query3 = `
 mutation MyMutation {
-  updateOrganisation(input: {id: ${idOrga}, users_id: "${listUser}", orga_type: ${type}}) {
+  updateOrganisation(input: {id: ${idOrga}, users_id: ${userListString}, orga_type: ${type}}) {
     id
     orga_type
   }
